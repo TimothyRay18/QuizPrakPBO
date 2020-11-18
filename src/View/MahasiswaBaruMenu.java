@@ -78,6 +78,7 @@ public class MahasiswaBaruMenu implements ActionListener {
         }
         Mahasiswa mahasiswa = new Mahasiswa(nim.getText(),nama.getText(),Integer.parseInt(angkatan.getText()),listJurusan.get(i).getKode());
         ControllerDatabase.insertMahasiswa(mahasiswa);
+        new MainMenu();
         frame.dispose();
     }
 }

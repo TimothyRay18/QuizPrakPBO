@@ -45,7 +45,7 @@ public class ControllerDatabase {
 
     public static boolean insertMahasiswa(Mahasiswa mahasiswa) {
         conn.connect();
-        String query = "INSERT INTO mahasiswa VALUES(?,?)";
+        String query = "INSERT INTO mahasiswa VALUES(?,?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setString(1, mahasiswa.getNim());

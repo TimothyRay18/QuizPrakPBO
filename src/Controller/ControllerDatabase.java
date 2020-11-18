@@ -1,47 +1,83 @@
 package Controller;
 
+import Model.Jurusan;
+import Model.Mahasiswa;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ControllerDatabase {
     static DataBaseHandler conn = new DataBaseHandler();
-//    public static boolean insertMember(Member member) {
-//        Date date = new Date(member.getYear()-1900,member.getMonth()-1,member.getDay());
-//        conn.connect();
-//        String query = "INSERT INTO member VALUES(?,?,?,?,?,?,?,?,?)";
-//        try {
-//            PreparedStatement stmt = conn.con.prepareStatement(query);
-//            stmt.setString(1,member.getUsername());
-//            stmt.setString(2,member.getPassword());
-//            stmt.setString(3,member.getName());
-//            stmt.setString(4,member.getAddress());
-//            stmt.setString(5,member.getGender());
-//            stmt.setString(6,member.getEmail());
-//            stmt.setDate(7,date);
-//            stmt.setDouble(8,member.getPoint());
-//            stmt.setDouble(9,member.getMoney());
-//            stmt.executeUpdate();
-//            return (true);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return (false);
-//        }
-//    }
-//
-//    public static ArrayList<String> getAllUsernames() {
-//        ArrayList<String> listUsername = new ArrayList<>();
-//        conn.connect();
-//        String query = "SELECT * FROM member";
-//        try {
-//            Statement stmt = conn.con.createStatement();
-//            ResultSet rs = stmt.executeQuery(query);
-//            while (rs.next()) {
-//                String username = rs.getString("username");
-//                listUsername.add(username);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return (listUsername);
-//    }
+
+    public static boolean insertJurusan(Jurusan jurusan) {
+        conn.connect();
+        String query = "INSERT INTO jurusan VALUES(?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setString(1, jurusan.getKode());
+            stmt.setString(2, jurusan.getNama());
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+
+    public static ArrayList<Jurusan> getAllJurusan() {
+        ArrayList<Jurusan> listJurusan = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM jurusan";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Jurusan jurusan = new Jurusan();
+                jurusan.setKode(rs.getString("kode"));
+                jurusan.setNama(rs.getString("nama"));
+                listJurusan.add(jurusan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (listJurusan);
+    }
+
+    public static boolean insertMahasiswa(Mahasiswa mahasiswa) {
+        conn.connect();
+        String query = "INSERT INTO mahasiswa VALUES(?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setString(1, mahasiswa.getNim());
+            stmt.setString(2, mahasiswa.getNama());
+            stmt.setInt(3, mahasiswa.getAngkatan());
+            stmt.setString(4, mahasiswa.getKode_jurusan());
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+
+    public static ArrayList<Mahasiswa> getAllMahasiswa() {
+        ArrayList<Mahasiswa> listMahasiswa = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM mahasiswa";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Mahasiswa mahasiswa = new Mahasiswa();
+                mahasiswa.setNim(rs.getString("nim"));
+                mahasiswa.setNama(rs.getString("nama"));
+                mahasiswa.setAngkatan(rs.getInt("angkatan"));
+                mahasiswa.setKode_jurusan(rs.getString("kode_jurusan"));
+                listMahasiswa.add(mahasiswa);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (listMahasiswa);
+    }
 }
